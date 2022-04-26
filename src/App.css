@@ -1,0 +1,43 @@
+html {
+  background-color: azure;
+}
+.App {
+  text-align: center;
+  background-color: azure;
+  font-family: Calibri;
+  font-size: 16px;
+}
+
+.container {
+  font-family: Calibri;
+  font-size: 20px;
+  background-color: lightskyblue;
+  /*background-image: linear-gradient(#19c3fb, #1c9cf6);*/
+  min-width: 800px;
+  border: solid black 10px;
+}
+
+.top-weather {
+  border-bottom: solid 2px gray;
+}
+
+.small-image {
+  width: 75%;
+  height: auto;
+  margin-bottom: 2px;
+}
+
+.search-bar {
+  min-width: 100%;
+}
+
+.single-day :hover {
+  background-color: cornflowerblue;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #1c9cf6;
+  border-radius: 10px;
+}
