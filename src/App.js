@@ -23,7 +23,7 @@ const App =()=> {
 
   const getForcast = async value => {
     const forecast = await axios.get(
-        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=gnAuSabdsDkVLyrgGl8UjG4Oq5nQJnYB=true&metric=true`
+        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=gnAuSabdsDkVLyrgGl8UjG4Oq5nQJnYB&details=true&metric=true`
     );
     setWeatherForcast(forecast.data.DailyForecasts);
   };
