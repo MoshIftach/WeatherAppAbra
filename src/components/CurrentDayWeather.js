@@ -26,8 +26,8 @@ export const CurrentDayWeather = ({
                     }-s.png`}
                     alt="weather-icon"
                 />
-                <h6>{`${dayMaxTemp}°F`}</h6>
-                <h6>{`${dayMinTemp}°F`}</h6>
+                <h6>{`${dayMaxTemp}°C`}</h6>
+                <h6>{`${dayMinTemp}°C`}</h6>
             </div>
         </div>
     );

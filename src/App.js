@@ -18,12 +18,12 @@ const App =()=> {
 
 
   useEffect(() => {
-     getLocations();
+    getLocations();
   }, [])
 
   const getForcast = async value => {
     const forecast = await axios.get(
-        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=gnAuSabdsDkVLyrgGl8UjG4Oq5nQJnYB&details=true`
+        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=gnAuSabdsDkVLyrgGl8UjG4Oq5nQJnYB=true&metric=true`
     );
     setWeatherForcast(forecast.data.DailyForecasts);
   };
@@ -42,6 +42,7 @@ const App =()=> {
     setLocationApi(cityCountry)
   };
 
+
   const handleOnChange = (city, code) => {
     setSelectedCity(city);
     getForcast(code);
@@ -52,26 +53,26 @@ const App =()=> {
   };
 
 
-    return (
-        <div className="App">
-          <h1 className="m-5">Weather Forecast App</h1>
-          <br/>
-          <h3>Abra</h3>
-          <Dropdown
-              locations={locationApi}
-              handleOnChange={handleOnChange}
-          />
+  return (
+      <div className="App">
+        <h1 className="m-5">Weather Forecast App</h1>
+        <br/>
+        <h3>Abra</h3>
+        <Dropdown
+            locations={locationApi}
+            handleOnChange={handleOnChange}
+        />
 
-          {Object.keys(weatherForcast).length === 0 ? null : (
-              <WeeklyWeather
-                  handleDaySelection={handleDaySelection}
-                  selectedDay={selectedDay}
-                  selectedCity={selectedCity}
-                  weatherData={weatherForcast}
-              />
-          )}
-        </div>
-    );
+        {Object.keys(weatherForcast).length === 0 ? null : (
+            <WeeklyWeather
+                handleDaySelection={handleDaySelection}
+                selectedDay={selectedDay}
+                selectedCity={selectedCity}
+                weatherData={weatherForcast}
+            />
+        )}
+      </div>
+  );
 }
 
 export default App;
