@@ -1,40 +1,36 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import Dropdown from "./components/DropDown";
 import { WeeklyWeather } from "./components/WeeklyWeather";
 
-var urlKey ='gnAuSabdsDkVLyrgGl8UjG4Oq5nQJnYB';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      locationsApi: [],
-      selectedCity: "",
-      weatherForcast: [],
-      selectedDay: "0"
-    };
-  }
+const App =()=> {
+
+  const [locationApi,setLocationApi] = useState([]);
+
+  const [selectedCity,setSelectedCity] = useState("");
+
+  const [weatherForcast,setWeatherForcast] = useState([]);
+
+  const [selectedDay,setSelectedDay] = useState("0");
 
 
-  async componentDidMount() {
-    await this.getLocations();
-  }
+  useEffect(() => {
+     getLocations();
+  }, [])
 
-  getForcast = async value => {
+  const getForcast = async value => {
     const forecast = await axios.get(
-        `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${urlKey}&details=true`
+        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=gnAuSabdsDkVLyrgGl8UjG4Oq5nQJnYB&details=true`
     );
-    this.setState({
-      weatherForcast: forecast.data.DailyForecasts
-    });
+    setWeatherForcast(forecast.data.DailyForecasts);
   };
 
-  getLocations = async () => {
+  const getLocations = async () => {
     const locations = await axios.get(
-        `http://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${urlKey}`
+        `https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=gnAuSabdsDkVLyrgGl8UjG4Oq5nQJnYB`
     );
     const cityCountry = [];
     for (let location of locations.data) {
@@ -43,42 +39,39 @@ class App extends Component {
       let code = location.Key;
       cityCountry.push({ label, value, code });
     }
-    this.setState({ locationsApi: cityCountry });
+    setLocationApi(cityCountry)
   };
 
-  handleOnChange = (city, code) => {
-    this.setState({ selectedCity: city });
-    this.getForcast(code);
+  const handleOnChange = (city, code) => {
+    setSelectedCity(city);
+    getForcast(code);
   };
 
-  handleDaySelection = e => {
-    this.setState({
-      selectedDay: e
-    });
+  const handleDaySelection = e => {
+    setSelectedDay(e);
   };
 
-  render() {
+
     return (
         <div className="App">
           <h1 className="m-5">Weather Forecast App</h1>
           <br/>
           <h3>Abra</h3>
           <Dropdown
-              locations={this.state.locationsApi}
-              handleOnChange={this.handleOnChange}
+              locations={locationApi}
+              handleOnChange={handleOnChange}
           />
 
-          {Object.keys(this.state.weatherForcast).length === 0 ? null : (
+          {Object.keys(weatherForcast).length === 0 ? null : (
               <WeeklyWeather
-                  handleDaySelection={this.handleDaySelection}
-                  selectedDay={this.state.selectedDay}
-                  selectedCity={this.state.selectedCity}
-                  weatherData={this.state.weatherForcast}
+                  handleDaySelection={handleDaySelection}
+                  selectedDay={selectedDay}
+                  selectedCity={selectedCity}
+                  weatherData={weatherForcast}
               />
           )}
         </div>
     );
-  }
 }
 
 export default App;
